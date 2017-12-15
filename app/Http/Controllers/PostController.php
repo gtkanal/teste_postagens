@@ -122,17 +122,17 @@ class PostController extends Controller
         return view('post.index', compact('posts', 'search'));
     }
 
-    public function detail($id)
+    public function detail($id, $success = 3)
     {
         $post = Post::find($id);
 
-        $comments = Comment::where('post_id', '=', $id)->get();
+        $comments = Comment::where('post_id', '=', $id)->orderBy('created_at', 'desc')->get();
 
         if(!$post){
             return redirect()->route('post.index');
         }
 
-        return view('post.detail', compact('post', 'comments'));
+        return view('post.detail', compact('post', 'comments', 'success'));
     }
 
 }

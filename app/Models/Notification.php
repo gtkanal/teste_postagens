@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
 {
+    protected $fillable = ['post_id', 'user_id', 'comment_id'];
+
     /**
      * Get the post that owns the comment.
      */
