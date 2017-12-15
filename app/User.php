@@ -32,7 +32,7 @@ class User extends Authenticatable
      */
     public function comments()
     {
-        return $this->hasMany('App\Comment');
+        return $this->hasMany('App\Models\Comment');
     }
 
     /**
@@ -40,7 +40,7 @@ class User extends Authenticatable
      */
     public function posts()
     {
-        return $this->hasMany('App\Post');
+        return $this->hasMany('App\Models\Post');
     }
 
     /**
@@ -48,7 +48,17 @@ class User extends Authenticatable
      */
     public function notifications()
     {
-        return $this->hasMany('App\Notification');
+        return $this->hasMany('App\Models\Notification');
+    }
+
+    public function isSubscriber()
+    {
+        return $this->subscriber == 1 ? true : false;
+    }
+
+    public function isFeatured()
+    {
+        return $this->featured == 1 ? true : false;
     }
 
 }

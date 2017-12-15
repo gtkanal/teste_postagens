@@ -5,6 +5,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
+                    @if($success == 1)
+                        <div class="alert alert-success">
+                            <strong>Comentário adicionado com sucesso!</strong>
+                        </div>
+                    @elseif($success == 0)
+                        <div class="alert alert-danger">
+                            <strong>Comentário não adicionado!</strong>
+                        </div>
+                    @endif
+
                     <ol class="breadcrumb panel-heading">
                         <li><a href="{{route('post.index')}}">Postagens</a></li>
                         <li class="active">Editar</li>
@@ -30,14 +40,22 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th>Nome</th>
+                        <th>ID do usuário</th>
+                        <th>ID do comentário</th>
+                        <th>Login</th>
+                        <th>Assinante</th>
+                        <th>Data/Hora</th>
                         <th>Comentário</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($comments as $comment)
                         <tr>
-                            <td>{{ $comment->user->name }}</td>
+                            <td>{{ $comment->user->id}}</td>
+                            <td>{{ $comment->id }}</td>
+                            <td>{{ $comment->user->email }}</td>
+                            <td>{{ $comment->user->isSubscriber() ? "Assinante" : "Não assinante"}}</td>
+                            <td>{{ $comment->formattedDate() }}</td>
                             <td>{{ $comment->comment }}</td>
                         </tr>
                     @endforeach
