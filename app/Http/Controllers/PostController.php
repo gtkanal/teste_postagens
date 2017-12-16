@@ -27,8 +27,10 @@ class PostController extends Controller
     {
         $posts = Post::paginate(10);
 
+        $user = Auth::user();
 
-        return view('post.index', compact('posts'));
+
+        return view('post.index', compact('posts', 'user'));
     }
 
     public function add()

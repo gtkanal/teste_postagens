@@ -6,30 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
 {
-    protected $fillable = ['post_id', 'user_id', 'comment_id'];
+    protected $fillable = ['post_id', 'user_id', 'comment_id', 'active', 'first_display_date'];
 
-    /**
-     * Get the post that owns the comment.
-     */
+
     public function post()
     {
-        return $this->belongsTo('App\Post');
+        return $this->belongsTo('App\Models\Post');
     }
 
-    /**
-     * Get the user that owns the comment.
-     */
     public function user()
     {
         return $this->belongsTo('App\User');
     }
 
-    /**
-     * Get the user that owns the comment.
-     */
     public function comment()
     {
-        return $this->belongsTo('App\Comment');
+        return $this->belongsTo('App\Models\Comment');
     }
 
 }

@@ -15,7 +15,7 @@ class Comment extends Model
      */
     public function post()
     {
-        return $this->belongsTo('App\Post');
+        return $this->belongsTo('App\Models\Post');
     }
 
     /**
@@ -30,5 +30,11 @@ class Comment extends Model
     {
 
         return $this->created_at->format('d/m/Y h:m:s');
+    }
+
+    public function hourDiff()
+    {
+
+        return Carbon::now()->diffInHours($this->created_at);
     }
 }

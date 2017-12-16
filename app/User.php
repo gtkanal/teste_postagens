@@ -27,25 +27,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    /**
-     * Get the users comments.
-     */
     public function comments()
     {
         return $this->hasMany('App\Models\Comment');
     }
 
-    /**
-     * Get the users posts.
-     */
     public function posts()
     {
         return $this->hasMany('App\Models\Post');
     }
 
-    /**
-     * Get the users notifications.
-     */
     public function notifications()
     {
         return $this->hasMany('App\Models\Notification');

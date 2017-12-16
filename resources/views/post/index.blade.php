@@ -24,7 +24,7 @@
                         <thead>
                             <tr>
                                 <th>Título</th>
-                                <th>Ação</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,9 +32,12 @@
                                 @foreach($posts as $post)
                                     <tr>
                                         <td> <a href="{{route('post.detail', $post->id)}}" >{{ $post->title }}</a></td>
-                                        <td width="155" class="text-center">
-                                            <a href="{{route('post.edit', $post->id)}}" class="btn btn-default">Editar</a>
-                                            <a href="{{route('post.delete', $post->id)}}" class="btn btn-danger">Excluir</a>
+                                        <td width="300" class="text-center">
+                                            <a href="{{route('post.detail', $post->id)}}" class="btn btn-success">Ver</a>
+                                            @if($post->user_id == $user->id)
+                                                <a href="{{route('post.edit', $post->id)}}" class="btn btn-default">Editar</a>
+                                                <a href="{{route('post.delete', $post->id)}}" class="btn btn-danger">Excluir</a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

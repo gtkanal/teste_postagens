@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">Bem vindo <strong>{{ $user_name }}</strong></div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -14,7 +14,20 @@
                         </div>
                     @endif
 
-                    You are logged in!
+
+                    @if(count($messages) >  0)
+                        @foreach($messages as $message)
+                            <div class="alert alert-warning">
+                                {!! $message !!}
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="alert alert-info">
+                            <strong>Você não tem notificações no momento!</strong>
+                        </div>
+                    @endif
+
+
                 </div>
             </div>
         </div>
