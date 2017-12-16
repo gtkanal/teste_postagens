@@ -1,58 +1,52 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# API de comentários em postagens
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Projeto de teste para a implementação de uma API desenvolvida em PHP com Laravel 5.5
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+#Front end
+Tomei a liberdade de também desenvolver uma parte visual para aplicação, facilitando a criação de dados para a API.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Para poder administrar também os usuários o usuário deve ser administrador. Alterar o campo "role" da tabela users para 1, para criar o primeiro administrador, que poderá criar outros.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+# Endpoints  API
 
-## Learning Laravel
+#####localhost/public/api/postagem/{id_da_postagem}/comentarios  -> tipo GET
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+Lista todos os comentários de uma postagem específica, determinada pelo ID, ordenada da mais nova para a mais antiga.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+Este endpoint suporta paginação. Para acessar as próximas páginas é necessário adicionar ao final da URL o parametro:
+ 
+ "?page=(numero da página)" 
+ 
+ Este endpoint retorna:
+ 
+ a. id do usuário
+ b. id do comentário
+ c. login
+ d. assinante
+ e. data/hora
+ f. comentário
+ 
+#####localhost/public/api/usuario/{id_do_usuário}/notificacoes -> tipo GET
 
-## Laravel Sponsors
+Lista todas as notificações do usuário determinado pelo ID. 
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
+Após ser mostrada pela primeira vez, ou listada na API a notificação deve ser exibida apenas por mais 6 horas (número puramente arbitrário)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
+#####localhost/public/api/postagem/comentar -> tipo POST
 
-## Contributing
+Endpoint que insere um novo comentário a uma postagem.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+Para que seja possível a insersão, os dados de login e senha.
 
-## Security Vulnerabilities
+Parâmetros:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. "post_id" (ID da postagem que será comentada) ;
+2. "comment" (Texto do comentário à ser inserido);
 
-## License
+Caso o usuário da postagem e o usuário do comentário não sejam assinantes, e o usuário do comentário não esteja comprando destaque, o comentário não deve ser realizado.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Um usuário pode comentar uma vez a cada 30 segundos pelo menos, ou então seu comentário também não será inserido.
+
+
+####Se houverem quaisquer dúvidas, estou à disposição no email: gtkanal@gmail.com
