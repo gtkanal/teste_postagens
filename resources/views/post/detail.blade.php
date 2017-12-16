@@ -10,7 +10,7 @@
                     </div>
                 @elseif($success == 0)
                     <div class="alert alert-danger">
-                        <strong>Comentário não adicionado!</strong>
+                        <strong>Comentário não adicionado! {{$message}}</strong>
                     </div>
                 @endif
 
@@ -21,10 +21,12 @@
                     </ol>
                     <div class="panel-body">
                         <div class="container" style="padding-right: 7%;">
+                            <p><small>Autor: {{ $post->user()->first()->name }}</small></p>
                             <h2><label for="title">{{ $post->title }}</label></h2>
-                            <pre>
-                                {{ $post->post }}
-                            </pre>
+                            <p>
+                                    {{ $post->post }}
+                            </p>
+
                         </div>
                     </div>
                 </div>

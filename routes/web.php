@@ -23,7 +23,7 @@ Route::get('/postagens', ['uses'=>'PostController@index', 'as'=>'post.index']);
 Route::get('/postagens/add', ['uses'=>'PostController@add', 'as'=>'post.add']);
 Route::post('/postagens/save', ['uses'=>'PostController@save', 'as'=>'post.save']);
 Route::get('/postagens/edit/{id}', ['uses'=>'PostController@edit', 'as'=>'post.edit']);
-Route::get('/postagens/detail/{id}/{success?}', ['uses'=>'PostController@detail', 'as'=>'post.detail']);
+Route::get('/postagens/detail/{id}/{success?}/{message?}', ['uses'=>'PostController@detail', 'as'=>'post.detail']);
 Route::post('/postagens/update/{id}', ['uses'=>'PostController@update', 'as'=>'post.update']);
 Route::get('/postagens/delete/{id}', ['uses'=>'PostController@delete', 'as'=>'post.delete']);
 Route::put('/postagens/search', ['uses'=>'PostController@search', 'as'=>'post.search']);

@@ -21,7 +21,9 @@ class CommentController extends Controller
 
     public function save(Request $request)
     {
-        $success= false;
+        $success = false;
+
+        $message = "";
 
         $validator = Validator::make($request->all(), [
             'comment'=> 'required',
@@ -36,33 +38,46 @@ class CommentController extends Controller
 
             $post = Post::find($post_id);
 
-            $success = $this->validComment($post->user_id);
+            if($post){
 
-            if($success){
+                $return = $this->validComment($post->user_id);
 
-                $comment = Comment::create([
-                    'user_id' => $user->id,
-                    'post_id' => $post_id,
-                    'comment'   => $request->input('comment'),
-                ]);
+                if($return['success']){
 
-                if($comment){
-
-                    $notification = Notification::create([
-                        'user_id'    => $post->user_id,
-                        'post_id'    => $post_id,
-                        'comment_id' => $comment->id,
+                    $comment = Comment::create([
+                        'user_id' => $user->id,
+                        'post_id' => $post->id,
+                        'comment'   => $request->input('comment'),
                     ]);
+
+                    if($comment){
+
+                        $notification = Notification::create([
+                            'user_id'    => $post->user_id,
+                            'post_id'    => $post->id,
+                            'comment_id' => $comment->id,
+                        ]);
+
+                    }
+
+                    $success = 1;
+                    $message = 'sucesso';
+
+
+                } else {
+
+                    $success = 0;
+                    $message = $return['message'];
 
                 }
 
 
             }
 
-
+            return redirect()->route('post.detail', ['id' => $post->id, 'success' => $success, 'message' => $message ]);
         }
-        $success = $success ? 1 : 0;
-        return redirect()->route('post.detail', ['id' => $post_id, 'success' => $success]);
+
+        return redirect()->route('home');
 
     }
 
@@ -82,15 +97,23 @@ class CommentController extends Controller
 
         $now = Carbon::now();
 
+        $message = "";
+
         if($lastComment){
             $minimumDelay = $lastComment->created_at->addSeconds(30);
-            $valid = $valid && ($now > $minimumDelay);
+            if ($now < $minimumDelay){
+                $valid = false;
+                $message = "Você comentou a menos de 30 segundos!";
+            }
         }
 
 
-        $valid = $valid && ($postUser->isSubscriber() || $loggedUser->isSubscriber() || $loggedUser->isFeatured());
+        if (!$postUser->isSubscriber() && !$loggedUser->isSubscriber() && !$loggedUser->isFeatured()){
+            $valid = false;
+            $message = "Você não pode comentar nesta postagem!";
+        }
 
-        return $valid;
+        return ["success" => $valid, "message" => $message];
 
 
     }

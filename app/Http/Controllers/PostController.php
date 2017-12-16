@@ -25,7 +25,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(10);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
 
         $user = Auth::user();
 
@@ -124,7 +124,7 @@ class PostController extends Controller
         return view('post.index', compact('posts', 'search'));
     }
 
-    public function detail($id, $success = 3)
+    public function detail($id, $success = 3, $message = "" )
     {
         $post = Post::find($id);
 
@@ -134,7 +134,7 @@ class PostController extends Controller
             return redirect()->route('post.index');
         }
 
-        return view('post.detail', compact('post', 'comments', 'success'));
+        return view('post.detail', compact('post', 'comments', 'success', 'message'));
     }
 
 }
