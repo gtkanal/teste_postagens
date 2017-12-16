@@ -48,7 +48,7 @@
                         </form>
                     </div>
                     <div class="panel-footer">
-                        @foreach($comments as $comment)
+                        @if(count($comments) > 0)
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
@@ -61,17 +61,19 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>{{ $comment->user->id}}</td>
-                                    <td>{{ $comment->id }}</td>
-                                    <td>{{ $comment->user->email }}</td>
-                                    <td>{{ $comment->user->isSubscriber() ? "Assinante" : "Não assinante"}}</td>
-                                    <td>{{ $comment->formattedDate() }}</td>
-                                    <td>{{ $comment->comment }}</td>
-                                </tr>
+                                @foreach($comments as $comment)
+                                    <tr>
+                                        <td>{{ $comment->user->id}}</td>
+                                        <td>{{ $comment->id }}</td>
+                                        <td>{{ $comment->user->email }}</td>
+                                        <td>{{ $comment->user->isSubscriber() ? "Assinante" : "Não assinante"}}</td>
+                                        <td>{{ $comment->formattedDate() }}</td>
+                                        <td>{{ $comment->comment }}</td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
-                        @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

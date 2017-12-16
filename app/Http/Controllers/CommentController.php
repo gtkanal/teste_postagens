@@ -14,6 +14,11 @@ use Carbon\Carbon;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function save(Request $request)
     {
         $success= false;

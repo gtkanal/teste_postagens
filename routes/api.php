@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/postagem/{id}/comentarios', 'ApiController@getComments');
+Route::get('/usuario/{id}/notificacoes', 'ApiController@getNotifications');
+Route::post('/postagem/comentar', 'ApiController@setComment')->middleware('auth.basic');
